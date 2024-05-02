@@ -24,6 +24,19 @@ function createCirlce(number){
         circle.id = i; 
     }   
 }
+/**
+ * Refresh la zone des cercle
+ */
+function RefreshCirlce(){       
+    const circle = circles.querySelectorAll('.circle');
+    for (const circleDel of circle) {
+        circles.removeChild(circleDel); 
+        const moleDelete = circles.querySelector('.mole'); 
+        if (moleDelete) { 
+            circleDel.removeChild(moleDelete);                 
+        }  
+    }   
+} 
 
 /**
  * Cration du Mole 
@@ -98,7 +111,7 @@ function time(){
             clearInterval(intervalMole);
             clearInterval(intervalTime);
             finsihTime = times;
-            setTimeout(location.reload(),8000);  
+            setTimeout(playGame,5000);  
         }
     }
 }
@@ -108,14 +121,18 @@ function time(){
  */
 function Game(){  
     scoreView(score);
+    console.log(score+'/'+scorage);
 
     if(parseInt(score) < parseInt(scorage)){
-        addMoleOnCircle();
+        addMoleOnCircle();        
     }else if(parseInt(score) == parseInt(scorage)){        
         scoreElem.innerHTML = 'You Win :)';
         console.log('You Win :)');
         clearInterval(intervalMole); 
-        setTimeout(location.reload(),8000);       
+        clearInterval(intervalTime);
+        finsihTime = times;
+        score = 0;
+        setTimeout( playGame,5000);       
     } 
 }
 /**
@@ -123,20 +140,17 @@ function Game(){
  */
 function playGame(){ 
     scoreElem.innerHTML = "Play Game";
-     
-    scoreElem.addEventListener('click',event =>{
-        RefreshCirlce();   
-        createCirlce(numberCicrle);
+    RefreshCirlce();
+    createCirlce(numberCicrle); 
+    scoreElem.addEventListener('click',event =>{  
+        
+        if(scoreElem.innerHTML =='Play Game' ){
         finsihTime = times;        
         scoreView(score);
         intervalMole = setInterval(Game,1500);
-        intervalTime = setInterval(time,1000);        
+        intervalTime = setInterval(time,1000); 
+        }  
     });
 }
 
 playGame();
-
-const timeElem = section.querySelector('.time');
-timeElem.addEventListener('click',event =>{
-    RefreshCirlce();
-});
