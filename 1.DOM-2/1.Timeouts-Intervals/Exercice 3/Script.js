@@ -49,7 +49,10 @@ function createMole(){
     return mole;
 }
 /**
- * Ajout du Mole dans un cercle pris aleatourement.
+ * Ajoute un "mole" à un cercle choisi aléatoirement.
+ * Sélectionne un cercle au hasard parmi ceux disponibles dans la section,
+ * ajoute un élément "mole" à ce cercle, et configure un événement de clic
+ * pour augmenter le score lorsque le "mole" est cliqué.
  */
 function addMoleOnCircle(){
     const circleRandom = Math.floor((Math.random() * numberCicrle)+1);
