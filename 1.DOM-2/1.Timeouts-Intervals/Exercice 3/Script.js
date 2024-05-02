@@ -1,9 +1,15 @@
 const section = document.querySelector('section');
 const circles = section.querySelector('.circles');
+const scoreElem = section.querySelector('.score');
 
-let score = 0;
 let intervalMole;
-let intervalMoleDelete;
+let intervalTime;
+
+let numberCicrle = 12
+let score = 0;
+let times = 40;
+let finsihTime = times;
+let scorage = 15;
 
 /**
  * Creation des cercle 
@@ -19,6 +25,15 @@ function createCirlce(number){
     }   
 }
 /**
+ * Refresh la zone des cercle
+ */
+function RefreshCirlce(){       
+    const circle = circles.querySelectorAll('.circle');
+    for (const circleDel of circle) {
+        circles.removeChild(circleDel);  
+    }        
+}
+/**
  * Cration du Mole 
  * @returns element créer
  */
@@ -32,18 +47,17 @@ function createMole(){
  * Ajout du Mole dans un cercle pris aleatourement.
  */
 function addMoleOnCircle(){
-    const circleRandom = Math.floor((Math.random() * 12)+1);
-    const circle = circles.querySelectorAll('.circle');    
+    const circleRandom = Math.floor((Math.random() * numberCicrle)+1);
+    const circle = circles.querySelectorAll('.circle'); 
     
     for (const circleMole of circle) {
         if(circleMole.id == circleRandom ){
-            console.log("circle:" + circleMole.id);
-            console.log("randoom : " + circleRandom);
+            //console.log("circle:" + circleMole.id);
+            //console.log("randoom : " + circleRandom);
             circleMole.appendChild(createMole());
-            setTimeout(removeMoleOnCircle, 2500,circleMole.id);
+            setTimeout(removeMoleOnCircle, 1500,circleMole.id);
 
             const moleClick = circleMole.querySelector('.mole');
-            console.log(moleClick);
             moleClick.addEventListener('click',event =>{
                 score += 1;
                 scoreView(score)                
@@ -72,41 +86,65 @@ function removeMoleOnCircle(id){
  * @param {*} numScore le scoreUser
  */
 function scoreView(numScore){
-    const scoreElem = section.querySelector('.score');
-    scoreElem.innerHTML = "Score : " + numScore;
+    scoreElem.innerHTML = 'Score : ' + numScore + '/' + scorage;
+}
+/**
+ * decompte temps de la Game
+ */
+function time(){
+    if (finsihTime >= 0) {
+        const timeView = section.querySelector('.time')
+        timeView.innerHTML = finsihTime;
+        finsihTime--;
+    } else {
+        clearInterval(intervalTime);
+        clearInterval(intervalMole);
+
+        if(parseInt(score) != parseInt(scorage)){     
+            scoreElem.innerHTML = 'You Lose :(';
+            console.log('You Lose :(');
+            clearInterval(intervalMole);
+            clearInterval(intervalTime);
+            finsihTime = times;
+            setTimeout(location.reload(),5000);  
+        }
+    }
 }
 
 /**
- * lancement du jeu
+ * Game
  */
-function Game(){   
+function Game(){  
+    scoreView(score);
 
-    if(score < 12){
+    if(parseInt(score) < parseInt(scorage)){
         addMoleOnCircle();
-     }else{
-        
-        const scoreElem = section.querySelector('.score');
-        scoreElem.innerHTML = "You Win !!!";
-        clearInterval(intervalMole);
-        playGame();
-    }
-
+    }else if(parseInt(score) == parseInt(scorage)){        
+        scoreElem.innerHTML = 'You Win :)';
+        console.log('You Win :)');
+        clearInterval(intervalMole); 
+        setTimeout(location.reload(),5000);       
+    } 
 }
-
-
-function playGame(){
-    if(score === 0){
-        const scoreElem = section.querySelector('.score');
-        scoreElem.innerHTML = "Play Game";
-        scoreElem.addEventListener('click',event =>{
-            createCirlce(12);
-            intervalMole = setInterval(Game,2500);
-        });
-    }else{
+/**
+ * lancement du Game
+ */
+function playGame(){ 
+    scoreElem.innerHTML = "Play Game";
+     
+    scoreElem.addEventListener('click',event =>{
+        RefreshCirlce();   
+        createCirlce(numberCicrle);
+        finsihTime = times;        
         scoreView(score);
-    }
+        intervalMole = setInterval(Game,1500);
+        intervalTime = setInterval(time,1000);        
+    });
 }
+
 playGame();
 
-
-
+const timeElem = section.querySelector('.time');
+timeElem.addEventListener('click',event =>{
+    RefreshCirlce();
+});
