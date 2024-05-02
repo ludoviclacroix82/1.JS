@@ -7,7 +7,7 @@ let intervalTime;
 
 let numberCicrle = 12
 let score = 0;
-let times = 40;
+let times = 30;
 let finsihTime = times;
 let scorage = 15;
 
@@ -24,15 +24,7 @@ function createCirlce(number){
         circle.id = i; 
     }   
 }
-/**
- * Refresh la zone des cercle
- */
-function RefreshCirlce(){       
-    const circle = circles.querySelectorAll('.circle');
-    for (const circleDel of circle) {
-        circles.removeChild(circleDel);  
-    }        
-}
+
 /**
  * Cration du Mole 
  * @returns element créer
@@ -106,7 +98,7 @@ function time(){
             clearInterval(intervalMole);
             clearInterval(intervalTime);
             finsihTime = times;
-            setTimeout(location.reload(),5000);  
+            setTimeout(location.reload(),8000);  
         }
     }
 }
@@ -123,7 +115,7 @@ function Game(){
         scoreElem.innerHTML = 'You Win :)';
         console.log('You Win :)');
         clearInterval(intervalMole); 
-        setTimeout(location.reload(),5000);       
+        setTimeout(location.reload(),8000);       
     } 
 }
 /**
