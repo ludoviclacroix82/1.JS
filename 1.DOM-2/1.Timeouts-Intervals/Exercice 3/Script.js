@@ -124,7 +124,7 @@ function time(){
  */
 function Game(){  
     scoreView(score);
-    console.log(score+'/'+scorage);
+    //console.log(score+'/'+scorage);
 
     if(parseInt(score) < parseInt(scorage)){
         addMoleOnCircle();        
