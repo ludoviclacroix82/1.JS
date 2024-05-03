@@ -24,7 +24,9 @@ let interval;
 const currentDate = new Date();
 
 date(currentDate);
-hours(currentDate,setItem('timeZone','en-GB'));
+hours(currentDate,'en-US');
+
+//console.log(currentDate.toLocaleString('en-US'));
 
 interval = setInterval(showdDate,1000);
 
@@ -52,30 +54,22 @@ function date(date){
  * @param {*} date 
  * @param {*} zone timezone
  */
-function hours(date,zone){
+function hours(date, zone) {
+    const timeString = date.toLocaleTimeString(zone);
 
-    let hours,minutes,secondes;
-    date.toLocaleString(zone);
-
-    console.log(date);
-
-    hours = date.getHours();
-
-    minutes = (date.getMinutes() >9)?date.getMinutes():'0'+date.getMinutes();
-    secondes = (date.getSeconds() >9)?date.getSeconds() : '0'+date.getSeconds();
+    const [hours, minutes, seconds] = timeString.split(':');
 
     hourTimeElem.innerHTML = hours;
     minTimeElem.innerHTML = minutes;
-    secTimeElem.innerHTML = secondes;
+    secTimeElem.innerHTML = seconds;
 }
 /**
  * fonction appeler par un setInterval
  */
 function showdDate(){
     const date = new Date();
+    date.toLocaleString('en-US');
     hours(date,getItem('timeZone'));
-
-    console.log(getItem('timeZone'));
 }
 
 /**
@@ -83,7 +77,7 @@ function showdDate(){
  */
 timeElem.addEventListener('click',event =>{
     if(getItem('timeZone') === 'en-GB'){
-        setItem('timeZone','ko-KR');
+        setItem('timeZone','en-US');
     }else{
         setItem('timeZone','en-GB');
     }    

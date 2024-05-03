@@ -45,7 +45,6 @@ section {
     width: 90px;
     height: 80px;
     font-size: 4rem;
-    color: #000;
     display: flex;
     justify-content: center;
     align-items: end; }
@@ -53,14 +52,19 @@ section {
     height: 80px;
     display: flex;
     align-items: center;
-    justify-content: center; }
+    justify-content: center;
+    padding: 0px 50px;
+    cursor: pointer; }
+    section .times:hover {
+      color: #c0c0c0 !important; }
     section .times .hour::after {
       content: ':';
       margin: 0 5px; }
     section .times .minutes::after {
       content: ':'; }
     section .times .seconde {
-      width: 30px;
+      min-width: 30px;
+      height: 80px;
       font-size: 2.5rem !important;
       display: flex;
       align-items: end;
