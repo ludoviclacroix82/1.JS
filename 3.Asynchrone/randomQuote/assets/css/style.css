@@ -9,7 +9,7 @@ header, footer {
 
 main {
   width: 100%;
-  height: 80dvh;
+  height: 70dvh;
   background-color: #c0c0c0;
   display: flex;
   align-items: center;
@@ -30,7 +30,24 @@ section {
     color: #fff;
     background-color: #000;
     border-top-right-radius: 50%;
-    border-bottom-right-radius: 50%; }
+    border-bottom-right-radius: 50%;
+    transition: all 0.5s;
+    -webkit-box-shadow: 18px 5px 23px -8px rgba(0, 0, 0, 0.57);
+    box-shadow: 18px 5px 23px -8px rgba(0, 0, 0, 0.57);
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer; }
+    section button:hover {
+      background-color: #c0c0c0;
+      color: #000;
+      transition: all 0.5s; }
+    section button span {
+      margin-top: 20px;
+      writing-mode: initial;
+      text-orientation: initial; }
   section article {
     width: 50%;
     height: 100%;
@@ -39,15 +56,17 @@ section {
     justify-content: center;
     padding: 0 50px; }
     section article h2 {
-      font-size: 1.5rem; }
-    section article h3 {
       font-size: 1.2rem;
+      overflow-x: hidden; }
+    section article h3 {
+      font-size: 1rem;
       color: #c0c0c0;
       text-align: left;
       margin-top: 20px; }
   section figure {
     width: 40%;
-    height: 100%; }
+    height: 100%;
+    border: 0; }
     section figure img {
       width: 100%;
       height: 100%;
@@ -55,6 +74,13 @@ section {
       border-top-left-radius: 50%;
       border-bottom-left-radius: 50%;
       position: relative;
-      left: 25%; }
+      animation: slideImg 0.8s ease-in;
+      border: 0; }
+
+@keyframes slideImg {
+  0% {
+    right: -100%; }
+  100% {
+    right: 0; } }
 
 /*# sourceMappingURL=style.css.map */

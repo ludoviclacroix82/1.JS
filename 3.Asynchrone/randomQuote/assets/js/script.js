@@ -4,11 +4,18 @@ const apiUrl2 = 'https://api.agify.io/?name=' + name;
 const section = document.querySelector('section');
 const article = document.querySelector('article');
 const figure = document.querySelector('figure');
+const btn = section.querySelector('button');
 
-section.querySelector('button').addEventListener('click', () => {
+
+let intervaltiming;
+
+btn.addEventListener('click', () => {
 
     article.innerHTML = '';
-    figure.removeChild(figure.querySelector('img'));
+    figure.innerHTML = '';
+
+    cpt = 30;
+    setInterval(timing,1000)
 
     showQuote();
 });
@@ -35,8 +42,13 @@ async function showQuote() {
         quoteElem.innerHTML = quote;
         article.appendChild(authorElem);
         authorElem.innerHTML = author + '[' + dataAge.age + ']';
-        figure.appendChild(imgAuthor);
-        imgAuthor.src = photoAuthor;
+        
+        if(photoAuthor != ''){
+            figure.appendChild(imgAuthor);
+            imgAuthor.src = photoAuthor;
+            console.log(photoAuthor != '');
+        }
+        
 
         // Do something with data2 if needed
 
@@ -44,4 +56,19 @@ async function showQuote() {
         console.log("There was an error!", error);
     }
 }
+let cpt = 30;
+function timing(){
 
+    const time = btn.querySelector('span')
+
+    if(cpt >0){
+        time.innerHTML = cpt +' s'
+    }else{
+        showQuote();
+        clearInterval(intervalChrono);
+        
+    } 
+    
+    cpt--;
+}
+intervaltiming = setInterval(timing,1000)
