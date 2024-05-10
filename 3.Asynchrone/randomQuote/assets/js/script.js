@@ -8,21 +8,25 @@ const btn = section.querySelector('button');
 
 
 let intervaltiming;
+let timer = 30;
+let cpt;
 
 btn.addEventListener('click', () => {
-
-    article.innerHTML = '';
-    figure.innerHTML = '';
-
-    cpt = 30;
-    setInterval(timing,1000)
-
     showQuote();
+    clearInterval(intervaltiming);
+    cpt = timer;
+    intervaltiming = setInterval(timing, 1000, cpt)
+
 });
 
 showQuote();
+intervaltiming = setInterval(timing, 1000, timer)
 
 async function showQuote() {
+    article.innerHTML = '';
+    figure.innerHTML = '';
+
+
     try {
         const responseQuote = await fetch(apiUrl);
         const dataQuote = await responseQuote.json();
@@ -42,33 +46,29 @@ async function showQuote() {
         quoteElem.innerHTML = quote;
         article.appendChild(authorElem);
         authorElem.innerHTML = author + '[' + dataAge.age + ']';
-        
-        if(photoAuthor != ''){
+
+        if (photoAuthor != '') {
             figure.appendChild(imgAuthor);
             imgAuthor.src = photoAuthor;
             console.log(photoAuthor != '');
         }
-        
-
-        // Do something with data2 if needed
 
     } catch (error) {
         console.log("There was an error!", error);
     }
 }
-let cpt = 30;
-function timing(){
-
+function timing() {
     const time = btn.querySelector('span')
 
-    if(cpt >0){
-        time.innerHTML = cpt +' s'
-    }else{
+    if (cpt > 0) {
+        time.innerHTML = cpt + ' s'
+        console.log(cpt);
+    } else {
+        clearInterval(intervaltiming);
         showQuote();
-        clearInterval(intervalChrono);
-        
-    } 
-    
+
+        cpt = timer;
+        intervaltiming = setInterval(timing, 1000, cpt)
+    }
     cpt--;
 }
-intervaltiming = setInterval(timing,1000)
